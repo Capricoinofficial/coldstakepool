@@ -2,16 +2,17 @@
 # -*- coding: utf-8 -*-
 
 # Copyright (c) 2018-2019 The Particl Core developers
+# Copyright (c) 2020 The Capricoin+ Core developers
 # Distributed under the MIT software license, see the accompanying
 # file LICENSE.txt or http://www.opensource.org/licenses/mit-license.php.
 
 """
 
-Minimal example of starting a Particl stake pool.
+Minimal example of starting a CapricoinPlus stake pool.
 
-1. Download and verify a particl-core release.
+1. Download and verify a capricoinplus-core release.
 
-2. Create a particl.conf that:
+2. Create a capricoinplus.conf that:
     - Starts 2 wallets
     - Enables zmqpubhashblock
     - Enables csindex and addressindex
@@ -33,7 +34,7 @@ Run the prepare script:
 coldstakepool-prepare.py -datadir=~/stakepoolDemoTest -testnet
 
 Start the daemon:
-~/particl-binaries/particld -datadir=/home/$(id -u -n)/stakepoolDemoTest
+~/capricoinplus-binaries/capricoinplusd -datadir=/home/$(id -u -n)/stakepoolDemoTest
 
 Start the pool script:
 coldstakepool-run.py -datadir=~/stakepoolDemoTest/stakepool -testnet
@@ -54,19 +55,19 @@ from coldstakepool.util import (
 )
 
 
-PARTICL_BINDIR = os.path.expanduser(os.getenv('PARTICL_BINDIR', '~/particl-binaries'))
-PARTICLD = os.getenv('PARTICLD', 'particld')
-PARTICL_CLI = os.getenv('PARTICL_CLI', 'particl-cli')
-PARTICL_TX = os.getenv('PARTICL_CLI', 'particl-tx')
+CAPRICOINPLUS_BINDIR = os.path.expanduser(os.getenv('CAPRICOINPLUS_BINDIR', '~/capricoinplus-binaries'))
+CAPRICOINPLUSD = os.getenv('CAPRICOINPLUSD', 'capricoinplusd')
+CAPRICOINPLUS_CLI = os.getenv('CAPRICOINPLUS_CLI', 'capricoinplus-cli')
+CAPRICOINPLUS_TX = os.getenv('CAPRICOINPLUS_CLI', 'capricoinplus-tx')
 
-PARTICL_VERSION = os.getenv('PARTICL_VERSION', '0.18.1.3')
-PARTICL_VERSION_TAG = os.getenv('PARTICL_VERSION_TAG', '')
-PARTICL_ARCH = os.getenv('PARTICL_ARCH', 'x86_64-linux-gnu.tar.gz')
-PARTICL_REPO = os.getenv('PARTICL_REPO', 'particl')
+CAPRICOINPLUS_VERSION = os.getenv('CAPRICOINPLUS_VERSION', '0.18.1.7')
+CAPRICOINPLUS_VERSION_TAG = os.getenv('CAPRICOINPLUS_VERSION_TAG', '')
+CAPRICOINPLUS_ARCH = os.getenv('CAPRICOINPLUS_ARCH', 'x86_64-linux-gnu.tar.gz')
+CAPRICOINPLUS_REPO = os.getenv('CAPRICOINPLUS_REPO', 'Capricoinofficial')
 
 
 def startDaemon(nodeDir, bindir):
-    command_cli = os.path.join(bindir, PARTICLD)
+    command_cli = os.path.join(bindir, CAPRICOINPLUSD)
 
     args = [command_cli, '-daemon', '-noconnect', '-nostaking', '-nodnsseed', '-datadir=' + nodeDir]
     p = subprocess.Popen(args, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -77,46 +78,46 @@ def startDaemon(nodeDir, bindir):
     return out[0]
 
 
-def downloadParticlCore():
-    print('Download and verify Particl core release.')
+def downloadCapricoinPlusCore():
+    print('Download and verify CapricoinPlus core release.')
 
-    if 'osx' in PARTICL_ARCH:
+    if 'osx' in CAPRICOINPLUS_ARCH:
         os_dir_name = 'osx-unsigned'
         os_name = 'osx'
-    elif 'win32-setup' in PARTICL_ARCH or 'win64-setup' in PARTICL_ARCH:
+    elif 'win32-setup' in CAPRICOINPLUS_ARCH or 'win64-setup' in CAPRICOINPLUS_ARCH:
         os_dir_name = 'win-signed'
         os_name = 'win-signer'
-    elif 'win32' in PARTICL_ARCH or 'win64' in PARTICL_ARCH:
+    elif 'win32' in CAPRICOINPLUS_ARCH or 'win64' in CAPRICOINPLUS_ARCH:
         os_dir_name = 'win-unsigned'
         os_name = 'win'
     else:
         os_dir_name = 'linux'
         os_name = 'linux'
 
-    signing_key_fingerprint = '8E517DC12EC1CC37F6423A8A13F13651C9CF0D6B'
-    signing_key_name = 'tecnovert'
+    signing_key_fingerprint = '8BE6C158D381E7AA68095502B48A2245CFE7C482'
+    signing_key_name = 'CapricoinPlus'
 
     if os_dir_name == 'win-signed':
-        assert_filename = 'particl-{}-build.assert'.format(os_name)
+        assert_filename = 'capricoinplus-{}-build.assert'.format(os_name)
     else:
-        assert_filename = 'particl-{}-{}-build.assert'.format(os_name, PARTICL_VERSION)
+        assert_filename = 'capricoinplus-{}-{}-build.assert'.format(os_name, CAPRICOINPLUS_VERSION)
 
-    assert_url = 'https://raw.githubusercontent.com/%s/gitian.sigs/master/%s-%s/%s/%s' % (PARTICL_REPO, PARTICL_VERSION + PARTICL_VERSION_TAG, os_dir_name, signing_key_name, assert_filename)
-    assert_path = os.path.join(PARTICL_BINDIR, assert_filename)
+    assert_url = 'https://raw.githubusercontent.com/%s/gitian.sigs/master/%s-%s/%s/%s' % (CAPRICOINPLUS_REPO, CAPRICOINPLUS_VERSION + CAPRICOINPLUS_VERSION_TAG, os_dir_name, signing_key_name, assert_filename)
+    assert_path = os.path.join(CAPRICOINPLUS_BINDIR, assert_filename)
 
-    release_filename = 'particl-{}-{}'.format(PARTICL_VERSION, PARTICL_ARCH)
-    release_url = 'https://github.com/%s/particl-core/releases/download/v%s/%s' % (PARTICL_REPO, PARTICL_VERSION + PARTICL_VERSION_TAG, release_filename)
+    release_filename = 'capricoinplus-{}-{}'.format(CAPRICOINPLUS_VERSION, CAPRICOINPLUS_ARCH)
+    release_url = 'https://github.com/%s/capricoinplus-core/releases/download/v%s/%s' % (CAPRICOINPLUS_REPO, CAPRICOINPLUS_VERSION + CAPRICOINPLUS_VERSION_TAG, release_filename)
 
     if not os.path.exists(assert_path):
-        subprocess.check_call(['wget', assert_url, '-P', PARTICL_BINDIR])
+        subprocess.check_call(['wget', assert_url, '-P', CAPRICOINPLUS_BINDIR])
 
-    sig_path = os.path.join(PARTICL_BINDIR, 'particl-%s-%s-build.assert.sig' % (os_name, PARTICL_VERSION))
+    sig_path = os.path.join(CAPRICOINPLUS_BINDIR, 'capricoinplus-%s-%s-build.assert.sig' % (os_name, CAPRICOINPLUS_VERSION))
     if not os.path.exists(sig_path):
         subprocess.check_call(['wget', assert_url + '.sig?raw=true', '-O', sig_path])
 
-    packed_path = os.path.join(PARTICL_BINDIR, release_filename)
+    packed_path = os.path.join(CAPRICOINPLUS_BINDIR, release_filename)
     if not os.path.exists(packed_path):
-        subprocess.check_call(['wget', release_url, '-P', PARTICL_BINDIR])
+        subprocess.check_call(['wget', release_url, '-P', CAPRICOINPLUS_BINDIR])
 
     hasher = hashlib.sha256()
     with open(packed_path, 'rb') as fp:
@@ -151,35 +152,35 @@ def downloadParticlCore():
         exit(1)
 
 
-def extractParticlCore():
-    packed_path = os.path.join(PARTICL_BINDIR, 'particl-%s-%s' % (PARTICL_VERSION, PARTICL_ARCH))
-    daemon_path = os.path.join(PARTICL_BINDIR, PARTICLD)
-    bin_prefix = 'particl-%s/bin' % (PARTICL_VERSION)
-    subprocess.check_call(['tar', '-xvf', packed_path, '-C', PARTICL_BINDIR, '--strip-components', '2',
-                           os.path.join(bin_prefix, PARTICLD), os.path.join(bin_prefix, PARTICL_CLI), os.path.join(bin_prefix, PARTICL_TX)])
+def extractCapricoinPlusCore():
+    packed_path = os.path.join(CAPRICOINPLUS_BINDIR, 'capricoinplus-%s-%s' % (CAPRICOINPLUS_VERSION, CAPRICOINPLUS_ARCH))
+    daemon_path = os.path.join(CAPRICOINPLUS_BINDIR, CAPRICOINPLUSD)
+    bin_prefix = 'capricoinplus-%s/bin' % (CAPRICOINPLUS_VERSION)
+    subprocess.check_call(['tar', '-xvf', packed_path, '-C', CAPRICOINPLUS_BINDIR, '--strip-components', '2',
+                           os.path.join(bin_prefix, CAPRICOINPLUSD), os.path.join(bin_prefix, CAPRICOINPLUS_CLI), os.path.join(bin_prefix, CAPRICOINPLUS_TX)])
 
     output = subprocess.check_output([daemon_path, '--version'])
     version = output.splitlines()[0].decode('utf-8')
-    print('particld --version\n' + version)
-    assert(PARTICL_VERSION in version)
+    print('capricoinplusd --version\n' + version)
+    assert(CAPRICOINPLUS_VERSION in version)
 
 
 def printVersion():
     from coldstakepool import __version__
-    print('Particl coldstakepool version:', __version__)
+    print('CapricoinPlus coldstakepool version:', __version__)
 
 
 def printHelp():
     print('Usage: coldstakepool-prepare ')
     print('\n--help, -h                 Print help.')
     print('\n--version, -v              Print version.')
-    print('\n--update_core              Download, verify and extract Particl core release and exit.')
-    print('\n--download_core            Download and verify Particl core release and exit.')
-    print('\n--datadir=PATH             Path to Particl data directory, default:~/.particl.')
+    print('\n--update_core              Download, verify and extract CapricoinPlus core release and exit.')
+    print('\n--download_core            Download and verify CapricoinPlus core release and exit.')
+    print('\n--datadir=PATH             Path to CapricoinPlus data directory, default:~/.capricoinplus.')
     print('\n--pooldir=PATH             Path to stakepool data directory, default:{datadir}/stakepool.')
-    print('\n--mainnet                  Run Particl in mainnet mode.')
-    print('\n--testnet                  Run Particl in testnet mode.')
-    print('\n--regtest                  Run Particl in regtest mode.')
+    print('\n--mainnet                  Run CapricoinPlus in mainnet mode.')
+    print('\n--testnet                  Run CapricoinPlus in testnet mode.')
+    print('\n--regtest                  Run CapricoinPlus in regtest mode.')
     print('\n--stake_wallet_mnemonic=   Recovery phrase to use for the staking wallet, default is randomly generated.')
     print('\n--reward_wallet_mnemonic=  Recovery phrase to use for the reward wallet, default is randomly generated.')
     print('\n--mode=master/observer     Mode stakepool is initialised to. observer mode requires configurl to be specified, default:master.')
@@ -214,11 +215,11 @@ def main():
             printHelp()
             return 0
         if name == 'update_core':
-            downloadParticlCore()
-            extractParticlCore()
+            downloadCapricoinPlusCore()
+            extractCapricoinPlusCore()
             return 0
         if name == 'download_core':
-            downloadParticlCore()
+            downloadCapricoinPlusCore()
             return 0
         if name == 'mainnet':
             continue
@@ -258,16 +259,16 @@ def main():
         sys.stderr.write('observer mode requires configurl set\n')
         exit(1)
 
-    if not os.path.exists(PARTICL_BINDIR):
-        os.makedirs(PARTICL_BINDIR)
+    if not os.path.exists(CAPRICOINPLUS_BINDIR):
+        os.makedirs(CAPRICOINPLUS_BINDIR)
 
-    # 1. Download and verify the specified version of particl-core
-    downloadParticlCore()
-    extractParticlCore()
+    # 1. Download and verify the specified version of capricoinplus-core
+    downloadCapricoinPlusCore()
+    extractCapricoinPlusCore()
 
     dataDirWasNone = False
     if dataDir is None:
-        dataDir = os.path.expanduser('~/.particl')
+        dataDir = os.path.expanduser('~/.capricoinplus')
         dataDirWasNone = True
 
     if poolDir is None:
@@ -287,8 +288,8 @@ def main():
     if not os.path.exists(poolDir):
         os.makedirs(poolDir)
 
-    # 2. Create a particl.conf
-    daemonConfFile = os.path.join(dataDir, 'particl.conf')
+    # 2. Create a capricoinplus.conf
+    daemonConfFile = os.path.join(dataDir, 'capricoinplus.conf')
     if os.path.exists(daemonConfFile):
         sys.stderr.write('Error: %s exists, exiting.' % (daemonConfFile))
         exit(1)
@@ -307,12 +308,12 @@ def main():
         fp.write('csindex=1\n')
         fp.write('addressindex=1\n')
 
-    startDaemon(dataDir, PARTICL_BINDIR)
+    startDaemon(dataDir, CAPRICOINPLUS_BINDIR)
 
     # Delay until responding
     for k in range(10):
         try:
-            callrpc_cli(PARTICL_BINDIR, dataDir, chain, 'getblockchaininfo')
+            callrpc_cli(CAPRICOINPLUS_BINDIR, dataDir, chain, 'getblockchaininfo')
             break
         except Exception:
             time.sleep(0.5)
@@ -324,17 +325,17 @@ def main():
             settings = json.loads(urllib.request.urlopen(configurl).read().decode('utf-8'))
 
             settings['mode'] = 'observer'
-            settings['particlbindir'] = PARTICL_BINDIR
-            settings['particldatadir'] = dataDir
+            settings['capricoinplusbindir'] = CAPRICOINPLUS_BINDIR
+            settings['capricoinplusdatadir'] = dataDir
             pool_stake_address = settings['pooladdress']
             pool_reward_address = settings['rewardaddress']
 
-            v = callrpc_cli(PARTICL_BINDIR, dataDir, chain, 'validateaddress "%s"' % (pool_stake_address))
+            v = callrpc_cli(CAPRICOINPLUS_BINDIR, dataDir, chain, 'validateaddress "%s"' % (pool_stake_address))
             assert('isvalid' in v)
             assert(v['isvalid'] is True)
 
-            callrpc_cli(PARTICL_BINDIR, dataDir, chain, '-rpcwallet=pool_stake importaddress "%s"' % (v['address']))
-            callrpc_cli(PARTICL_BINDIR, dataDir, chain, '-rpcwallet=pool_reward importaddress "%s"' % (pool_reward_address))
+            callrpc_cli(CAPRICOINPLUS_BINDIR, dataDir, chain, '-rpcwallet=pool_stake importaddress "%s"' % (v['address']))
+            callrpc_cli(CAPRICOINPLUS_BINDIR, dataDir, chain, '-rpcwallet=pool_reward importaddress "%s"' % (pool_reward_address))
 
             poolConfFile = os.path.join(poolDir, 'stakepool.json')
             if os.path.exists(poolConfFile):
@@ -348,37 +349,37 @@ def main():
 
         # 3. Generate and import a recovery phrase for both wallets.
         if stake_wallet_mnemonic is None:
-            stake_wallet_mnemonic = callrpc_cli(PARTICL_BINDIR, dataDir, chain, 'mnemonic new')['mnemonic']
+            stake_wallet_mnemonic = callrpc_cli(CAPRICOINPLUS_BINDIR, dataDir, chain, 'mnemonic new')['mnemonic']
 
         if reward_wallet_mnemonic is None:
-            reward_wallet_mnemonic = callrpc_cli(PARTICL_BINDIR, dataDir, chain, 'mnemonic new')['mnemonic']
+            reward_wallet_mnemonic = callrpc_cli(CAPRICOINPLUS_BINDIR, dataDir, chain, 'mnemonic new')['mnemonic']
 
-        callrpc_cli(PARTICL_BINDIR, dataDir, chain, '-rpcwallet=pool_stake extkeyimportmaster "%s"' % (stake_wallet_mnemonic))
-        callrpc_cli(PARTICL_BINDIR, dataDir, chain, '-rpcwallet=pool_reward extkeyimportmaster "%s"' % (reward_wallet_mnemonic))
+        callrpc_cli(CAPRICOINPLUS_BINDIR, dataDir, chain, '-rpcwallet=pool_stake extkeyimportmaster "%s"' % (stake_wallet_mnemonic))
+        callrpc_cli(CAPRICOINPLUS_BINDIR, dataDir, chain, '-rpcwallet=pool_reward extkeyimportmaster "%s"' % (reward_wallet_mnemonic))
 
         # 4. Generate the pool_stake_address from the staking wallet.
-        pool_stake_address = callrpc_cli(PARTICL_BINDIR, dataDir, chain, '-rpcwallet=pool_stake getnewaddress')
-        pool_stake_address = callrpc_cli(PARTICL_BINDIR, dataDir, chain, '-rpcwallet=pool_stake validateaddress %s true' % (pool_stake_address))['stakeonly_address']
+        pool_stake_address = callrpc_cli(CAPRICOINPLUS_BINDIR, dataDir, chain, '-rpcwallet=pool_stake getnewaddress')
+        pool_stake_address = callrpc_cli(CAPRICOINPLUS_BINDIR, dataDir, chain, '-rpcwallet=pool_stake validateaddress %s true' % (pool_stake_address))['stakeonly_address']
 
         # 5. Generate the pool_reward_address from the reward wallet.
-        pool_reward_address = callrpc_cli(PARTICL_BINDIR, dataDir, chain, '-rpcwallet=pool_reward getnewaddress')
+        pool_reward_address = callrpc_cli(CAPRICOINPLUS_BINDIR, dataDir, chain, '-rpcwallet=pool_reward getnewaddress')
 
         # 6. Disable staking on the reward wallet.
-        callrpc_cli(PARTICL_BINDIR, dataDir, chain, '-rpcwallet=pool_reward walletsettings stakingoptions "{\\"enabled\\":\\"false\\"}"')
+        callrpc_cli(CAPRICOINPLUS_BINDIR, dataDir, chain, '-rpcwallet=pool_reward walletsettings stakingoptions "{\\"enabled\\":\\"false\\"}"')
 
         # 7. Set the reward address of the staking wallet.
-        callrpc_cli(PARTICL_BINDIR, dataDir, chain, '-rpcwallet=pool_stake walletsettings stakingoptions "{\\"rewardaddress\\":\\"%s\\"}"' % (pool_reward_address))
+        callrpc_cli(CAPRICOINPLUS_BINDIR, dataDir, chain, '-rpcwallet=pool_stake walletsettings stakingoptions "{\\"rewardaddress\\":\\"%s\\"}"' % (pool_reward_address))
 
     finally:
-        callrpc_cli(PARTICL_BINDIR, dataDir, chain, 'stop')
+        callrpc_cli(CAPRICOINPLUS_BINDIR, dataDir, chain, 'stop')
 
     # 8. Create the stakepool.json configuration file.
     html_port = 9000 if chain == 'mainnet' else 9001
     poolsettings = {
         'mode': 'master',
         'debug': True,
-        'particlbindir': PARTICL_BINDIR,
-        'particldatadir': dataDir,
+        'capricoinplusbindir': CAPRICOINPLUS_BINDIR,
+        'capricoinplusdatadir': dataDir,
         'startheight': 200000,  # Set to a block height before the pool begins operating
         'pooladdress': pool_stake_address,
         'rewardaddress': pool_reward_address,

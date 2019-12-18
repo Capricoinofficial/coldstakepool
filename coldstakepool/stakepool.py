@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 # Copyright (c) 2018-2019 The Particl Core developers
+# Copyright (c) 2020 The Capricoin+ Core developers
 # Distributed under the MIT software license, see the accompanying
 # file LICENSE.txt or http://www.opensource.org/licenses/mit-license.php.
 
@@ -81,12 +82,12 @@ class StakePool():
         self.blockBuffer = 100  # Work n blocks from the tip to avoid forks, should be > COINBASE_MATURITY
 
         self.mode = settings.get('mode', 'master')
-        self.binDir = os.path.expanduser(settings['particlbindir'])
-        self.particlDataDir = os.path.expanduser(settings['particldatadir'])
+        self.binDir = os.path.expanduser(settings['capricoinplusbindir'])
+        self.capricoinplusDataDir = os.path.expanduser(settings['capricoinplusdatadir'])
         self.chain = chain
         self.debug = settings.get('debug', DEBUG)
 
-        self.poolAddrHrp = 'pcs' if self.chain == 'mainnet' else 'tpcs'
+        self.poolAddrHrp = 'ccs' if self.chain == 'mainnet' else 'tccs'
 
         self.poolAddr = settings['pooladdress']
         self.poolAddrReward = settings['rewardaddress']
@@ -175,7 +176,7 @@ class StakePool():
         db.close()
 
         # Wait for daemon to start
-        authcookiepath = os.path.join(self.particlDataDir, '' if self.chain == 'mainnet' else self.chain, '.cookie')
+        authcookiepath = os.path.join(self.capricoinplusDataDir, '' if self.chain == 'mainnet' else self.chain, '.cookie')
         for i in range(10):
             if not os.path.exists(authcookiepath):
                 time.sleep(0.5)
@@ -183,7 +184,7 @@ class StakePool():
             self.rpc_auth = fp.read()
 
         # Todo: Read rpc port from .conf file
-        self.rpc_port = settings.get('rpcport', 51735 if self.chain == 'mainnet' else 51935)
+        self.rpc_port = settings.get('rpcport', 11112 if self.chain == 'mainnet' else 12112)
 
     def start(self):
         logmt(self.fp, 'Starting StakePool at height %d\nPool Address: %s, Reward Address: %s, Mode %s\n' % (self.poolHeight, self.poolAddr, self.poolAddrReward, self.mode))
@@ -192,7 +193,7 @@ class StakePool():
         self.waitForDaemonRPC()
 
         self.core_version = callrpc(self.rpc_port, self.rpc_auth, 'getnetworkinfo')['version']
-        logmt(self.fp, 'Particl Core version %s\n' % (self.core_version))
+        logmt(self.fp, 'Capricoin+ Core version %s\n' % (self.core_version))
 
         if self.mode == 'master':
             self.runSanityChecks()

@@ -1,8 +1,8 @@
 
 [Unit]
-Description=Particl stakepool testnet
-After=particld_test.service
-Requires=particld_test.service
+Description=CapricoinPlus stakepool testnet
+After=capricoinplusd_test.service
+Requires=capricoinplusd_test.service
 
 [Service]
 ExecStart=/usr/local/bin/coldstakepool-run -datadir=~/stakepoolDemoTest/stakepool -testnet

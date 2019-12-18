@@ -1,8 +1,8 @@
 {
     "mode": "master",
     "debug": true,
-    "particlbindir": "",
-    "particldatadir": "",
+    "capricoinplusbindir": "",
+    "capricoinplusdatadir": "",
     "startheight": 0,
     "pooladdress": "",
     "rewardaddress": "",

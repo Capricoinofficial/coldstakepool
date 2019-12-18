@@ -3,8 +3,8 @@
 Install the python code:
 
 ```
-$ git clone https://github.com/particl/coldstakepool particl_stakepool
-$ cd particl_stakepool
+$ git clone https://github.com/Capricoinofficial/coldstakepool capricoinplus_stakepool
+$ cd capricoinplus_stakepool
 $ sudo pip3 install .
 ```
 
@@ -16,6 +16,6 @@ $ coldstakepool-prepare --datadir=${POOL_PATH} --testnet --mode=observer --confi
 ```
 
 ```
-$ ~/particl-binaries/particld --datadir=${POOL_PATH}
+$ ~/capricoinplus-binaries/capricoinplusd --datadir=${POOL_PATH}
 $ coldstakepool-run -datadir=${POOL_PATH}/stakepool -testnet
 ```

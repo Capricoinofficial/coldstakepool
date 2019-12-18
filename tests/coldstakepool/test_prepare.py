@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # Copyright (c) 2018-2019 The Particl Core developers
+# Copyright (c) 2020 The Capricoin+ Core developers
 # Distributed under the MIT software license, see the accompanying
 # file LICENSE.txt or http://www.opensource.org/licenses/mit-license.php.
 
@@ -59,7 +60,7 @@ class Test(unittest.TestCase):
                 with self.assertRaises(SystemExit) as cm:
                     prepareSystem.main()
         self.assertEqual(cm.exception.code, 1)
-        self.assertTrue('particl.conf exists' in fake_stderr.getvalue())
+        self.assertTrue('capricoinplus.conf exists' in fake_stderr.getvalue())
 
     def test_prepare_testnet(self):
         testargs = ['coldstakepool-prepare', '--datadir=~/csp_testnet', '--testnet']

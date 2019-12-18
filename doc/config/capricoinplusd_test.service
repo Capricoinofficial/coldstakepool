@@ -1,15 +1,15 @@
 
 [Unit]
-Description=Particl daemon
+Description=CapricoinPlus daemon testnet
 After=network.target
 
 [Service]
-ExecStart=/home/stakepooluser/particl-binaries/particld -daemon -datadir=/home/stakepooluser/stakepoolDemoLive -pid=/run/particld/particld.pid
+ExecStart=/home/stakepooluser/capricoinplus-binaries/capricoinplusd -daemon -datadir=/home/stakepooluser/stakepoolDemoTest -pid=/run/capricoinplusd_testnet/capricoinplusd.pid
 
-RuntimeDirectory=particld
+RuntimeDirectory=capricoinplusd_testnet
 User=stakepooluser
 Type=forking
-PIDFile=/run/particld/particld.pid
+PIDFile=/run/capricoinplusd_testnet/capricoinplusd.pid
 Restart=on-failure
 
 # Hardening measures

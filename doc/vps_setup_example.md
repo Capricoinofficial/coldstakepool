@@ -2,7 +2,7 @@
 
 This example should be run as a user named `stakepooluser`. To run as a different user replace all instances of `stakepooluser` with your username both in this guide and in the `.service` files in the config directory; eg:
 
-    sed -i -- 's/stakepooluser/YOURUSERNAME/g' config/*.service
+    sed -i -- 's/stakepooluser/YOURUSERNAME/g' doc/config/*.service
 
 ## 1. Preparation
 
@@ -22,8 +22,8 @@ $ sudo apt-get install gnupg wget python3 git nginx tmux python3-zmq python3-pip
 Clone `coldstakepool` git repository and install it:
 
 ```
-$ git clone https://github.com/particl/coldstakepool particl_stakepool
-$ cd particl_stakepool
+$ git clone https://github.com/Capricoinofficial/coldstakepool capricoinplus_stakepool
+$ cd capricoinplus_stakepool
 $ sudo pip3 install .
 ```
 
@@ -34,8 +34,8 @@ $ coldstakepool-prepare -datadir=~/stakepoolDemoTest -testnet
 NOTE: Save both recovery phrases:
 Stake wallet recovery phrase: (...)
 Reward wallet recovery phrase: (...)
-Stake address: tpcs1mwk4e0z4ll8p6n6wl0hm8l9slyf2vcgjatzwxh
-Reward address: poiXfkxxB5eeEgvL3MZN1pxPq9Bfwh7tEm
+Stake address: tch1q2drghyhkn3xgudfetc6zpfujdq5022ry8z9ue
+Reward address: tMsYuJo4hdRvcvxFPcjHKHpnVmwodEcaTJ
 ```
 
 Adjust the startheight parameter to a block before the pool began operating.  Earlier blocks won't be scanned by the pool:
@@ -45,22 +45,22 @@ Adjust the startheight parameter to a block before the pool began operating.  Ea
 Copy over `systemd` service files to your system:
 
 ```
-$ sudo cp ~/particl_stakepool/doc/config/*.service /etc/systemd/system
+$ sudo cp ~/capricoinplus_stakepool/doc/config/*.service /etc/systemd/system
 $ sudo systemctl daemon-reload
 ```
 
 Start and enable the services, so they start automatically at system boot:
 
 ```
-$ sudo systemctl start particld_test.service stakepool_test.service
-$ sudo systemctl enable particld_test.service stakepool_test.service
+$ sudo systemctl start capricoinplusd_test.service stakepool_test.service
+$ sudo systemctl enable capricoinplusd_test.service stakepool_test.service
 ```
 
 #### Verify all is running
 
 ```
 $ sudo tail -f /var/log/syslog
-$ ~/particl-binaries/particl-cli -datadir=${HOME}/stakepoolDemoTest getblockchaininfo
+$ ~/capricoinplus-binaries/capricoinplus-cli -datadir=${HOME}/stakepoolDemoTest getblockchaininfo
 $ lynx localhost:9001
 ```
 
@@ -69,15 +69,15 @@ $ lynx localhost:9001
 
 Stop the testnet pool (if running):
 
-    $ sudo systemctl stop particld_test.service stakepool_test.service
+    $ sudo systemctl stop capricoinplusd_test.service stakepool_test.service
 
 ```
 $ coldstakepool-prepare -datadir=~/stakepoolDemoLive
 NOTE: Save both the recovery phrases:
 Stake wallet recovery phrase: (...)
 Reward wallet recovery phrase: (...)
-Stake address: pcs14ch7w7ue2q8kadljsl42wehfw8tm99yxsez4kz
-Reward address: PbXgDsRurjpCYXxNryin13h86ufks9zh6o
+Stake address: ch1p9grrlfeqzvemgsaa2ccq25g2dc04ynht0yaju
+Reward address: 8dRCRjJzCf5AwaH6qLTArNj27K869rWe7T
 ```
 
 Adjust the startheight parameter.
@@ -87,22 +87,22 @@ Adjust the startheight parameter.
 Copy over `systemd` service files to your system:
 
 ```
-$ sudo cp ~/particl_stakepool/doc/config/*.service /etc/systemd/system
+$ sudo cp ~/capricoinplus_stakepool/doc/config/*.service /etc/systemd/system
 $ sudo systemctl daemon-reload
 ```
 
 Start and enable the services, so they start automatically at system boot:
 
 ```
-$ sudo systemctl start particld_live.service stakepool_live.service
-$ sudo systemctl enable particld_live.service stakepool_live.service
+$ sudo systemctl start capricoinplusd_live.service stakepool_live.service
+$ sudo systemctl enable capricoinplusd_live.service stakepool_live.service
 ```
 
 #### Verify all is running
 
 ```
 $ sudo tail -f /var/log/syslog
-$ ~/particl-binaries/particl-cli -datadir=${HOME}/stakepoolDemoLive getblockchaininfo
+$ ~/capricoinplus-binaries/capricoinplus-cli -datadir=${HOME}/stakepoolDemoLive getblockchaininfo
 $ lynx localhost:9000
 ```
 
@@ -110,7 +110,7 @@ $ lynx localhost:9000
 
 ```
 $ sudo rm /etc/nginx/sites-enabled/default
-$ sudo cp ~/particl_stakepool/doc/config/nginx_stakepool_forward.conf /etc/nginx/conf.d/
+$ sudo cp ~/capricoinplus_stakepool/doc/config/nginx_stakepool_forward.conf /etc/nginx/conf.d/
 ```
 
     $ sudo nginx -t
@@ -141,7 +141,7 @@ The production configuration enables:
 ```
 $ mkdir /tmp/nginx
 $ sudo rm /etc/nginx/conf.d/nginx_stakepool_forward.conf
-$ sudo cp ~/particl_stakepool/doc/config/nginx_stakepool_production.conf /etc/nginx/conf.d/
+$ sudo cp ~/capricoinplus_stakepool/doc/config/nginx_stakepool_production.conf /etc/nginx/conf.d/
 $ sudo systemctl restart nginx
 ```
 
@@ -170,8 +170,8 @@ $ sudo apt-get update && sudo apt-get install yarn
 Clone & install fancy frontend
 
 ```
-$ git clone https://github.com/gerlofvanek/particl-coldstakepool-front
-$ cd particl-coldstakepool-front
+$ git clone https://github.com/Capricoinofficial/capricoinplus-coldstakepool-front
+$ cd capricoinplus-coldstakepool-front
 $ yarn install
 $ yarn run build
 $ cp -R dist /var/www/html/pool

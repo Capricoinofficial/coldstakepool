@@ -3,8 +3,8 @@
 
 Shut down the pool and daemon (second line only applies if you're running testnet):
 
-    $ sudo systemctl stop stakepool_live.service particld_live.service
-    $ sudo systemctl stop stakepool_test.service particld_test.service
+    $ sudo systemctl stop stakepool_live.service capricoinplusd_live.service
+    $ sudo systemctl stop stakepool_test.service capricoinplusd_test.service
 
 
 Edit the height based parameters in stakepool.json
@@ -67,7 +67,7 @@ Start the pool/s back up (second line only applies if you're running testnet):
 
 Test the fee rate target is set:
 
-    ~/particl-binaries/particl-cli -datadir=${HOME}/stakepoolDemoLive -rpcwallet=pool_stake walletsettings stakingoptions
+    ~/capricoinplus-binaries/capricoinplus-cli -datadir=${HOME}/stakepoolDemoLive -rpcwallet=pool_stake walletsettings stakingoptions
 
 
 You should see smsgfeeratetarget in the output.

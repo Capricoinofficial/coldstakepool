@@ -1,8 +1,8 @@
 
 [Unit]
-Description=Particl stakepool mainnet
-After=particld_live.service
-Requires=particld_live.service
+Description=CapricoinPlus stakepool mainnet
+After=capricoinplusd_live.service
+Requires=capricoinplusd_live.service
 
 [Service]
 ExecStart=/usr/local/bin/coldstakepool-run -datadir=~/stakepoolDemoLive/stakepool

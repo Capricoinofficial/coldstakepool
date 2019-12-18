@@ -1,1 +1,0 @@
-coldstakepool_run.py

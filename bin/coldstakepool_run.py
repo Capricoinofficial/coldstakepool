@@ -2,14 +2,15 @@
 # -*- coding: utf-8 -*-
 
 # Copyright (c) 2018-2019 The Particl Core developers
+# Copyright (c) 2020 The Capricoin+ Core developers
 # Distributed under the MIT software license, see the accompanying
 # file LICENSE.txt or http://www.opensource.org/licenses/mit-license.php.
 
 """
-Particl Stake Pool - Proof of concept
+Capricoin+ Stake Pool - Proof of concept
 
 Staking should be disabled in the rewards wallet:
-    particl-cli -rpcwallet=pool_reward walletsettings stakingoptions "{\\"enabled\\":\\"false\\"}"
+    capricoinplus-cli -rpcwallet=pool_reward walletsettings stakingoptions "{\\"enabled\\":\\"false\\"}"
 
 
 Dependencies:
@@ -83,7 +84,7 @@ def runStakePool(fp, dataDir, chain):
 
 
 def printVersion():
-    print('Particl coldstakepool version:', __version__)
+    print('Capricoin+ coldstakepool version:', __version__)
 
 
 def printHelp():
@@ -127,7 +128,7 @@ def main():
         print('Unknown argument', v)
 
     if dataDir is None:
-        dataDir = os.path.join(os.path.expanduser('~/.particl'), ('' if chain == 'mainnet' else chain), 'stakepool')
+        dataDir = os.path.join(os.path.expanduser('~/.capricoinplus'), ('' if chain == 'mainnet' else chain), 'stakepool')
 
     print('dataDir:', dataDir)
     if chain != 'mainnet':

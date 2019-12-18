@@ -10,12 +10,12 @@ __version__ = re.search(
 setuptools.setup(
     name="coldstakepool",
     version=__version__,
-    author="The Particl Developers",
-    author_email="tecnovert@tecnovert.net",
-    description="Particl cold-staking pool",
+    author="The Capricoin+ Developers",
+    author_email="capricoin.plus@gmail.com",
+    description="Capricoin+ cold-staking pool",
     long_description=open("README.md").read(),
     long_description_content_type="text/markdown",
-    url="https://github.com/particl/coldstakepool",
+    url="https://github.com/Capricoinofficial/coldstakepool",
     packages=setuptools.find_packages(),
     include_package_data=True,
     classifiers=[
