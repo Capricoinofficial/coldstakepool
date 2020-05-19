@@ -555,7 +555,7 @@ class StakePool():
                 opts['feeRate'] = self.tx_fee_per_kb
 
             ro = callrpc(self.rpc_port, self.rpc_auth, 'sendtypeto',
-                         ['part', 'part', sl, '', '', 4, 64, False, opts], 'pool_reward')
+                         ['standard', 'standard', sl, '', '', 4, 64, False, opts], 'pool_reward')
 
             txfees += int(decimal.Decimal(ro['fee']) * COIN)
             txns.append(ro['txid'])
@@ -781,7 +781,7 @@ class StakePool():
 
             outputs = [{'address': self.owner_withdrawal_addr, 'amount': withdraw_amount}]
             ro = callrpc(self.rpc_port, self.rpc_auth, 'sendtypeto',
-                         ['part', 'part', outputs, '', '', 4, 64, False, opts], 'pool_reward')
+                         ['standard', 'standard', outputs, '', '', 4, 64, False, opts], 'pool_reward')
 
             txfee = int(decimal.Decimal(ro['fee']) * COIN)
             logmt(self.fp, 'Withdrawing %s to %s in tx: %s\n' % (withdraw_amount, self.owner_withdrawal_addr, ro['txid']))
